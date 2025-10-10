@@ -7,6 +7,10 @@ export default {
   node_env: process.env.NODE_ENV,
   port: process.env.PORT,
   database_url: process.env.DATABASE_URL,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET,
+  access_token_expire: process.env.ACCESS_TOKEN_EXPIRE,
+  refresh_token_secret: process.env.REFRESH_TOKEN_SECRET,
+  refresh_token_expire: process.env.REFRESH_TOKEN_EXPIRE,
   cloudinary: {
     api_secret: process.env.CLOUDINARY_API_SECRET,
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
