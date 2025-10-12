@@ -7,7 +7,7 @@ import auth from "../../middlewares/auth";
 
 const router = express.Router();
 
-router.get("/", UserController.getAllFromDB);
+router.get("/", auth(UserRole.ADMIN), UserController.getAllFromDB);
 
 router.post(
   "/create-patient",
@@ -22,6 +22,7 @@ router.post(
 
 router.post(
   "/create-admin",
+  auth(UserRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = UserValidation.createAdminValidationSchema.parse(
@@ -33,6 +34,7 @@ router.post(
 
 router.post(
   "/create-doctor",
+  auth(UserRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     console.log(JSON.parse(req.body.data));
