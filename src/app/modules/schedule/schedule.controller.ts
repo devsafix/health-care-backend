@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
 import { ScheduleService } from "./schedule.service";
-import { JwtPayload } from "jsonwebtoken";
 import pick from "../../helper/pick";
+import { IJwtPayload } from "../../types";
 
 const createSchedule = catchAsync(async (req: Request, res: Response) => {
   const result = await ScheduleService.createSchedule(req.body);
@@ -17,13 +17,13 @@ const createSchedule = catchAsync(async (req: Request, res: Response) => {
 });
 
 const schedulesForDoctor = catchAsync(
-  async (req: Request & { user?: JwtPayload }, res: Response) => {
+  async (req: Request & { user?: IJwtPayload }, res: Response) => {
     const options = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);
     const filters = pick(req.query, ["startDateTime", "endDateTime"]);
-
     const user = req.user;
+
     const result = await ScheduleService.schedulesForDoctor(
-      user as JwtPayload,
+      user as IJwtPayload,
       filters,
       options
     );
