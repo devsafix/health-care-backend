@@ -7,7 +7,7 @@ import { IJwtPayload } from "../../types";
 const createDoctorSchedule = catchAsync(
   async (req: Request & { user?: IJwtPayload }, res: Response) => {
     const user = req.user;
-    const result = await DoctorScheduleService.insertIntoDB(
+    const result = await DoctorScheduleService.createDoctorSchedule(
       user as IJwtPayload,
       req.body
     );
