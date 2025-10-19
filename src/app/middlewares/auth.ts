@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { jwtHelper } from "../helper/jwtHelper";
 import config from "../../config";
+import AppError from "../errorHelpers/AppError";
+import status from "http-status";
 
 const auth = (...roles: string[]) => {
   return async (
@@ -12,7 +14,7 @@ const auth = (...roles: string[]) => {
       const token = req.cookies.accessTokenHealthCare;
 
       if (!token) {
-        throw new Error("You are not authorized!");
+        throw new AppError(status.UNAUTHORIZED, "You are not authorized!");
       }
 
       const verifyUser = jwtHelper.verifyToken(
@@ -23,7 +25,7 @@ const auth = (...roles: string[]) => {
       req.user = verifyUser;
 
       if (roles.length && !roles.includes(verifyUser.role)) {
-        throw new Error("You are not authorized!");
+        throw new AppError(status.UNAUTHORIZED, "You are not authorized!");
       }
 
       next();
