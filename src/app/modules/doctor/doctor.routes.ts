@@ -8,6 +8,8 @@ router.get("/", DoctorController.getAllFromDB);
 
 router.post("/suggestion", DoctorController.getAISuggestions);
 
+router.get("/:id", DoctorController.getByIdFromDB);
+
 router.patch(
   "/:id",
   auth(UserRole.ADMIN, UserRole.DOCTOR),
