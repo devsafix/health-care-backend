@@ -6,6 +6,8 @@ import { Admin, Doctor, Prisma, UserRole, UserStatus } from "@prisma/client";
 import { IOptions, paginationHelper } from "../../helper/paginationHelper";
 import { userSearchableFields } from "./user.constant";
 import { IJwtPayload } from "../../types";
+import AppError from "../../errorHelpers/AppError";
+import status from "http-status";
 
 const createPatient = async (req: Request) => {
   if (req.file) {
@@ -194,10 +196,33 @@ const getMyProfile = async (user: IJwtPayload) => {
   };
 };
 
+const changeProfileStatus = async (
+  id: string,
+  payload: { status: UserStatus }
+) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  if (!userData) new AppError(status.BAD_REQUEST, "User not found");
+
+  const updateUserStatus = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+
+  return updateUserStatus;
+};
+
 export const UserService = {
   createPatient,
   createAdmin,
   createDoctor,
   getAllUsers,
   getMyProfile,
+  changeProfileStatus,
 };
