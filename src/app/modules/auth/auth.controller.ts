@@ -38,7 +38,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   const { refreshToken } = req.cookies;
 
   const result = await AuthService.refreshToken(refreshToken);
-  res.cookie("accessToken", result.accessToken, {
+  res.cookie("accessTokenHealthCare", result.accessTokenHealthCare, {
     secure: true,
     httpOnly: true,
     sameSite: "none",
