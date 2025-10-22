@@ -11,10 +11,17 @@ export default {
   access_token_expire: process.env.ACCESS_TOKEN_EXPIRE,
   refresh_token_secret: process.env.REFRESH_TOKEN_SECRET,
   refresh_token_expire: process.env.REFRESH_TOKEN_EXPIRE,
+  reset_pass_secret: process.env.RESET_PASS_TOKEN,
+  reset_pass_token_expires_in: process.env.RESET_PASS_TOKEN_EXPIRES_IN,
+  reset_pass_link: process.env.RESET_PASS_LINK,
   cloudinary: {
     api_secret: process.env.CLOUDINARY_API_SECRET,
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
+  },
+  emailSender: {
+    email: process.env.EMAIL,
+    app_pass: process.env.APP_PASS,
   },
   open_router_api_key: process.env.OPEN_ROUTER_API_KEY,
   stripe_secret_key: process.env.STRIPE_SECRET_KEY,
