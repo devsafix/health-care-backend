@@ -6,6 +6,8 @@ import config from "./config";
 import router from "./app/routes";
 import cookieParser from "cookie-parser";
 import { PaymentController } from "./app/modules/payment/payment.controller";
+import corn from "node-cron";
+import { AppointmentService } from "./app/modules/appointment/appointment.service";
 
 const app: Application = express();
 
@@ -26,6 +28,14 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
+corn.schedule("* * * * *", () => {
+  try {
+    AppointmentService.cancelUnpaidAppointments();
+  } catch (err) {
+    console.error(err);
+  }
+});
 
 app.use("/api/v1", router);
 
