@@ -10,6 +10,8 @@ router.post("/suggestion", DoctorController.getAISuggestions);
 
 router.get("/:id", DoctorController.getByIdFromDB);
 
+router.delete("/:id", auth(UserRole.ADMIN), DoctorController.deleteFromDB);
+
 router.patch(
   "/:id",
   auth(UserRole.ADMIN, UserRole.DOCTOR),

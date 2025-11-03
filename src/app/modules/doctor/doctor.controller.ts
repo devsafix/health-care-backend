@@ -43,6 +43,17 @@ const getAISuggestions = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await DoctorService.deleteFromDB(id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Doctor deleted successfully",
+    data: result,
+  });
+});
+
 const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await DoctorService.getByIdFromDB(id);
@@ -59,4 +70,5 @@ export const DoctorController = {
   updateIntoDB,
   getAISuggestions,
   getByIdFromDB,
+  deleteFromDB,
 };
