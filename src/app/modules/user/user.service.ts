@@ -20,6 +20,7 @@ const createPatient = async (req: Request) => {
   const result = await prisma.$transaction(async (tnx) => {
     await tnx.user.create({
       data: {
+        name: req.body.patient.name,
         email: req.body.patient.email,
         password: hashPassword,
       },
@@ -44,6 +45,7 @@ const createAdmin = async (req: Request): Promise<Admin> => {
   const hashedPassword: string = await bcrypt.hash(req.body.password, 10);
 
   const userData = {
+    name: req.body.admin.name,
     email: req.body.admin.email,
     password: hashedPassword,
     role: UserRole.ADMIN,
@@ -74,6 +76,7 @@ const createDoctor = async (req: Request): Promise<Doctor> => {
   const hashedPassword: string = await bcrypt.hash(req.body.password, 10);
 
   const userData = {
+    name: req.body.doctor.name,
     email: req.body.doctor.email,
     password: hashedPassword,
     role: UserRole.DOCTOR,

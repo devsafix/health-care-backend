@@ -202,11 +202,12 @@ const getMe = async (session: any) => {
     },
   });
 
-  const { id, email, role, needPasswordChange, status } = userData;
+  const { id, email, role, needPasswordChange, name, status } = userData;
 
   return {
     id,
     email,
+    name,
     role,
     needPasswordChange,
     status,
