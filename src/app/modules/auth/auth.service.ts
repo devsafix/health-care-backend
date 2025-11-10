@@ -8,7 +8,11 @@ import status from "http-status";
 import { Secret } from "jsonwebtoken";
 import emailSender from "../../helper/emailSender";
 
-const login = async (payload: { email: string; password: string }) => {
+const login = async (payload: {
+  name: string;
+  email: string;
+  password: string;
+}) => {
   const user = await prisma.user.findUniqueOrThrow({
     where: {
       email: payload.email,
@@ -24,14 +28,16 @@ const login = async (payload: { email: string; password: string }) => {
     throw new AppError(status.BAD_REQUEST, "Password is incorrect!");
   }
 
+  console.log(user);
+
   const accessTokenHealthCare = jwtHelper.generateToken(
-    { email: user.email, role: user.role },
+    { name: user.name, email: user.email, role: user.role },
     config.access_token_secret as string,
     config.access_token_expire as string
   );
 
   const refreshTokenHealthCare = jwtHelper.generateToken(
-    { email: user.email, role: user.role },
+    { name: user.name, email: user.email, role: user.role },
     config.refresh_token_secret as string,
     config.refresh_token_expire as string
   );
